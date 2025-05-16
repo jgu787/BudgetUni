@@ -30,7 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B5E119B42DC967030040A0B0 /* BudgetUni */ = {
+		B5801C2B2DD6F76B004ADF48 /* BudgetUni */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BudgetUni;
 			sourceTree = "<group>";
@@ -75,7 +75,7 @@
 		B5E119A92DC967030040A0B0 = {
 			isa = PBXGroup;
 			children = (
-				B5E119B42DC967030040A0B0 /* BudgetUni */,
+				B5801C2B2DD6F76B004ADF48 /* BudgetUni */,
 				B5E119C32DC967050040A0B0 /* BudgetUniTests */,
 				B5E119CD2DC967050040A0B0 /* BudgetUniUITests */,
 				B5E119B32DC967030040A0B0 /* Products */,
@@ -108,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				B5E119B42DC967030040A0B0 /* BudgetUni */,
+				B5801C2B2DD6F76B004ADF48 /* BudgetUni */,
 			);
 			name = BudgetUni;
 			packageProductDependencies = (
@@ -416,7 +416,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -455,7 +456,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";

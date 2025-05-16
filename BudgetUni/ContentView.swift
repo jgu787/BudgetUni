@@ -8,14 +8,44 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var showMenu = false
+    @State private var selectedTab = 0
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            ZStack {
+                VStack {
+                    TabView(selection: $selectedTab) {
+                        Text("Home")
+                            .tag(0)
+                        Text("Calculator")
+                            .tag(1)
+                        Text("Spin")
+                            .tag(2)
+                        Text("History")
+                            .tag(3)
+                        Text("Foods")
+                            .tag(4)
+                    }
+                    .disabled(true)
+                }
+                
+                SideMenuView(isShowing: $showMenu, selectedTab: $selectedTab)
+            }
+            .toolbar(showMenu ? .hidden : .visible, for: .navigationBar)
+            .navigationTitle("Home")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        showMenu.toggle()
+                    }, label: {
+                        Image(systemName: "line.3.horizontal")
+                        
+                    })
+                }
+            }
         }
-        .padding()
     }
 }
 

@@ -10,9 +10,9 @@ import Foundation
 enum SideMenuOptionModel: Int, CaseIterable {
     case home
     case calculator
-    case spin
-    case history
     case food
+    case analyse
+    case history
     
     var title: String {
         switch self {
@@ -20,12 +20,12 @@ enum SideMenuOptionModel: Int, CaseIterable {
             return "Home"
         case.calculator:
             return "Calculator"
-        case.spin:
-            return "Spin"
-        case.history:
-            return "History"
         case.food:
             return "Foods"
+        case.analyse:
+            return "Analytics"
+        case.history:
+            return "History"
 
         }
     }
@@ -36,12 +36,12 @@ enum SideMenuOptionModel: Int, CaseIterable {
             return "house.fill"
         case.calculator:
             return "apps.ipad"
-        case.spin:
-            return "circle.dotted.circle"
-        case.history:
-            return "cart.badge.clock.fill"
         case.food:
             return "map.fill"
+        case.analyse:
+            return "chart.xyaxis.line"
+        case.history:
+            return "cart.badge.clock.fill"
 
         }
     }

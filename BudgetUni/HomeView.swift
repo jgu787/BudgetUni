@@ -9,7 +9,25 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            HStack{
+                // Home Content
+                VStack {
+                    HStack {
+                        Text("Welcome Back!")
+                            .font(.largeTitle)
+                        Spacer()
+                    }
+                    .padding(.leading)
+                    
+                    IncomeVsExpenseGraphView()
+                    SpendingHabitsGraphView()
+
+                    Text("Current Streak: 0🔥")
+                }
+            }
+            Spacer()
+        }
     }
 }
 

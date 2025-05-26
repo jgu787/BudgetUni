@@ -15,14 +15,18 @@ struct SideMenuView: View {
     var body: some View {
         ZStack {
             if isShowing {
+                // background gray box
                 Rectangle()
                     .opacity(0.3)
                     .ignoresSafeArea()
                     .onTapGesture { isShowing.toggle()}
+                
+                // side menu
                 HStack {
                     VStack (alignment: .leading, spacing: 32) {
                         SideMenuHeaderView()
                         
+                        // Button navigation for each section
                         VStack {
                             ForEach(SideMenuOptionModel.allCases) { option in
                                 Button(action: {
@@ -43,7 +47,7 @@ struct SideMenuView: View {
                 .transition(.move(edge: .leading))
             }
         }
-        //.transition(.move(edge: .leading))
+        .transition(.move(edge: .leading))
         .animation(.easeInOut, value: isShowing)
     }
     

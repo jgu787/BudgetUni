@@ -67,11 +67,11 @@ struct ContentView: View {
                     }
                     // pops up the add expense prompt
                     .sheet(isPresented: $showAddExpense) {
-                        //AddExpenseView(isPresented: $showAddExpense)
+                        AddExpenseView(isPresented: $showAddExpense)
                     }
                     // pops up the add income prompt
                     .sheet(isPresented: $showAddIncome) {
-                        //AddIncomeView(isPresented: $showAddIncome)
+                        AddIncomeView(isPresented: $showAddIncome)
                     }
                 }
             }

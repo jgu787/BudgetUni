@@ -4,6 +4,7 @@
 //
 //  Created by Jiamin Gu on 2025-05-15.
 //
+// stores the name and icon of each tab in the side menu
 
 import Foundation
 

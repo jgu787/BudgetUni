@@ -17,6 +17,7 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 VStack {
+                    // tabs for navigation
                     TabView(selection: $selectedTab) {
                         HomeView()
                             .tag(0)
@@ -36,18 +37,19 @@ struct ContentView: View {
                     }
                 }
                 
-                // sheets layout
+                // layered sheets, side menu appears above
                 SideMenuView(isShowing: $showMenu, selectedTab: $selectedTab)
             }
             .toolbar(showMenu ? .hidden : .visible, for: .navigationBar)
             .navigationTitle(SideMenuOptionModel(rawValue: selectedTab)!.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // button for showing sidemenu
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         showMenu.toggle()
                     }, label: {
-                        Image(systemName: "line.3.horizontal")
+                        Image(systemName: "list.bullet")
                         
                     })
                 }
@@ -68,10 +70,12 @@ struct ContentView: View {
                     // pops up the add expense prompt
                     .sheet(isPresented: $showAddExpense) {
                         AddExpenseView(isPresented: $showAddExpense)
+                            .presentationDetents([.medium,.large])
                     }
                     // pops up the add income prompt
                     .sheet(isPresented: $showAddIncome) {
                         AddIncomeView(isPresented: $showAddIncome)
+                            .presentationDetents([.medium,.large])
                     }
                 }
             }

@@ -28,6 +28,8 @@ struct SideMenuView: View {
                         
                         // Button navigation for each section
                         VStack {
+                            // generates all tabs by iterating through
+                            // all existing tabs
                             ForEach(SideMenuOptionModel.allCases) { option in
                                 Button(action: {
                                     onOptionTapped(option)
@@ -51,6 +53,7 @@ struct SideMenuView: View {
         .animation(.easeInOut, value: isShowing)
     }
     
+    // changes tabs tp a different tab if clicked
     private func onOptionTapped(_ option: SideMenuOptionModel) {
         selectedOption = option
         selectedTab = option.rawValue

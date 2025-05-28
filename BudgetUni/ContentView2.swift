@@ -10,7 +10,7 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct ContentView2: View {
     
     @Environment(\.modelContext) private var context
     
@@ -128,7 +128,6 @@ struct ContentView: View {
         foodName = ""
         foodCost = ""
         
-        totalFoodCost = items.reduce(0) {$0 + $1.expenseAmount}
     }
 
     // Delete item
@@ -146,6 +145,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView2()
 }
 

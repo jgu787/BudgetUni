@@ -28,7 +28,7 @@ struct ContentView: View {
                         Text("Foods")
                             .tag(2)
                             .toolbar(.hidden, for: .tabBar)
-                        Text("Analytics")
+                        AnalyticsView()
                             .tag(3)
                             .toolbar(.hidden, for: .tabBar)
                         Text("History")

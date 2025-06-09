@@ -20,10 +20,9 @@ struct HomeView: View {
                     }
                     .padding(.leading)
                     
+                    StreakView()
                     IncomeVsExpenseGraphView()
                     SpendingHabitsGraphView()
-
-                    Text("Current Streak: 0🔥")
                 }
             }
             Spacer()

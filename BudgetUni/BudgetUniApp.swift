@@ -13,5 +13,6 @@ struct BudgetUniApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: BudgetingTools.self)
     }
 }

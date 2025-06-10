@@ -23,7 +23,7 @@ struct ContentView: View {
                             .tag(0)
                             .toolbar(.hidden, for: .tabBar)
                         Text("Calculator")
-                            .tag(1)
+                        CalculatorView()                            .tag(1)
                             .toolbar(.hidden, for: .tabBar)
                         Text("Foods")
                             .tag(2)

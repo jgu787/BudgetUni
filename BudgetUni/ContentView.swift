@@ -18,7 +18,7 @@ struct ContentView: View {
                     TabView(selection: $selectedTab) {
                         Text("Home")
                             .tag(0)
-                        Text("Calculator")
+                        CalculatorView()
                             .tag(1)
                         Text("Foods")
                             .tag(2)
@@ -27,7 +27,6 @@ struct ContentView: View {
                         Text("History")
                             .tag(4)
                     }
-                    .disabled(true)
                 }
                 
                 SideMenuView(isShowing: $showMenu, selectedTab: $selectedTab)

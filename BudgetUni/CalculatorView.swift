@@ -10,7 +10,7 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView2: View {
+struct CalculatorView: View {
     
     @Environment(\.modelContext) private var context
     
@@ -42,7 +42,7 @@ struct ContentView2: View {
     var body: some View {
         VStack(spacing: 35) {
             
-            Text("Budget Tracker").font(.title)
+            Text("Budget Estimate").font(.title)
 
             // Budget input
             TextField("Total budget", text: $totalBudgetInput)
@@ -145,6 +145,6 @@ struct ContentView2: View {
 }
 
 #Preview {
-    ContentView2()
+    CalculatorView()
 }
 

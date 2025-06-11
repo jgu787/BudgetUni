@@ -12,7 +12,7 @@ struct AddIncomeView: View {
     @State private var name: String = ""
     @State private var income: Float = 0.0
     @State private var date = Date()
-    @State private var isRecuring: Bool = false
+    @State private var isRecurring: Bool = false
     @State private var selectedFrequency: String = "Daily"
     @State private var isValid: Bool = true
     
@@ -45,7 +45,7 @@ struct AddIncomeView: View {
             }
             
             // how often this payment would be received
-            SelectFrequencyView(isRecuring: $isRecuring,
+            SelectFrequencyView(isRecurring: $isRecurring,
                                 selectedFrequency: $selectedFrequency,
                                 date: $date)
             

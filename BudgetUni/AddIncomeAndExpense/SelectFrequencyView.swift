@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SelectFrequencyView: View {
-    @Binding var isRecuring: Bool
+    @Binding var isRecurring: Bool
     @Binding var selectedFrequency: String
     @Binding var date: Date
     
@@ -22,13 +22,13 @@ struct SelectFrequencyView: View {
             .bold()
         
         // change between payment is recurring and payment is not
-        Toggle(isOn: $isRecuring) {
-            Text("Recuring?")
+        Toggle(isOn: $isRecurring) {
+            Text("Recurring?")
                 .bold()
         }
         
-        // not recuring
-        if !isRecuring {
+        // not recurring
+        if !isRecurring {
             // simple single date selector
             DatePicker("Date:",selection: $date,displayedComponents: .date)
                 .bold()
@@ -59,7 +59,7 @@ struct SelectFrequencyView: View {
 }
 
 #Preview {
-    SelectFrequencyView(isRecuring: .constant(false),
+    SelectFrequencyView(isRecurring: .constant(false),
                         selectedFrequency: .constant("Daily"),
                         date: .constant(Date()))
 }

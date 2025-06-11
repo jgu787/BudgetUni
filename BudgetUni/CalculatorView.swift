@@ -14,8 +14,11 @@ struct CalculatorView: View {
     
     @Environment(\.modelContext) private var context
     
-    // Query fetches data from database
+    // Query fetches data from BudgetingTools database
     @Query(filter: #Predicate<BudgetingTools> { _ in true }, animation: .default) private var items: [BudgetingTools]
+    
+    // Query fetches data from TotalBudget to help with calculations
+    @Query private var budgets: [TotalBudget]
     
     init() {
         print("Fetched items count: \(items.count)")
@@ -25,9 +28,12 @@ struct CalculatorView: View {
     @State private var foodName = ""
     @State private var foodCost = ""
     @State private var totalBudgetInput = ""
-    // Defaults it to start at $0
-    @State private var totalBudget: Double = 0.0
     @State private var dataRefreshTrigger = false
+    
+    // Total budget
+    var totalBudget: Double {
+        budgets.first?.amount ?? 0.0
+    }
     
     // Food costs
     
@@ -42,7 +48,7 @@ struct CalculatorView: View {
     var body: some View {
         VStack(spacing: 35) {
             
-            Text("Budget Estimate").font(.title)
+            Text("Budget Estimator").font(.title)
 
             // Budget input
             TextField("Total budget", text: $totalBudgetInput)
@@ -51,9 +57,25 @@ struct CalculatorView: View {
                 .padding(.horizontal)
 
             Button("Set Budget") {
-                totalBudget = Double(totalBudgetInput) ?? 0.0
-                // Clears input after
-                totalBudgetInput = ""
+                let newAmount = Double(totalBudgetInput) ?? 0.0
+
+                // Checks whether budget is already in database, if so it will override and pull saved budget (first grabs first one saved)
+                
+                if let existingBudget = budgets.first {
+                    existingBudget.amount = newAmount
+                } else {
+                    let newBudget = TotalBudget(amount: newAmount)
+                    context.insert(newBudget)
+                }
+
+                // Saves it to database
+                do {
+                    try context.save()
+                    // Clears input after
+                    totalBudgetInput = ""
+                } catch {
+                    print("Failed to save budget: \(error.localizedDescription)")
+                }
             }
 
             Divider()
@@ -68,7 +90,6 @@ struct CalculatorView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
 
-                //let cost = Double(foodCost) ?? 0.0
 
             Button("Add Food Expense") {
                 addItem()
@@ -115,8 +136,6 @@ struct CalculatorView: View {
         // Add the item to the data context
         context.insert(item)
         
-        //try? context.save()
-        
         do {
                 try context.save()
                 print("Item saved: \(item.name) - $\(item.expenseAmount)")
@@ -133,7 +152,6 @@ struct CalculatorView: View {
     // Delete item
     func deleteItem(_ item: BudgetingTools) {
         context.delete(item)
-        //try? context.save()
         
         do {
                 try context.save()

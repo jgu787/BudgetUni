@@ -7,15 +7,35 @@
 
 import SwiftUI
 import Charts
+import SwiftData
 
 // shows a breakdown of where all your money is going towards
 struct SpendingBreakdownChart: View {
+    /*
     let breakdowns = [
         ("Food", 100),
         ("Living", 300),
         ("Personal", 100),
         ("Education",400)
     ]
+     */
+    
+    // Fetches the data from breakdown category
+    @Query private var breakdownItems: [Breakdown]
+    
+    var breakdowns: [(String, Double)] {
+           guard let breakdown = breakdownItems.first else { return [] }
+           
+           return [
+               ("Food", breakdown.food),
+               ("Living", breakdown.living),
+               ("Personal", breakdown.personal),
+               ("Education", breakdown.education),
+               ("Misc", breakdown.miscellaneous)
+           ].filter { $0.1 > 0 }
+        
+        // Only show categories with data
+       }
     
     var body: some View {
         GroupBox {

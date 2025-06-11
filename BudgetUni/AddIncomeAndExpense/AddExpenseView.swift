@@ -5,14 +5,22 @@
 //  Created by Jiamin Gu on 2025-05-18.
 //
 
+// Imports
+
 import SwiftUI
+import SwiftData
 
 struct AddExpenseView: View {
+    
+    // Provides access to database
+    @Environment(\.modelContext) private var context
+    
+
     @Binding var isPresented: Bool
     @State private var name: String = ""
     @State private var price: Float = 0.0
     @State private var date = Date()
-    @State private var isRecuring: Bool = false
+    @State private var isRecurring: Bool = false
     @State private var selectedFrequency: String = "Daily"
     @State private var isValid: Bool = true
     
@@ -46,12 +54,34 @@ struct AddExpenseView: View {
                     .background(.white)
             }
             
-            SelectFrequencyView(isRecuring: $isRecuring,
+            SelectFrequencyView(isRecurring: $isRecurring,
                                 selectedFrequency: $selectedFrequency,
                                 date: $date)
             
             // Save button
             Button(action: {
+                
+                let newExpense = Expenses(
+                       expenses: Double(price),
+                       name: name,
+                       date: date,
+                       isRecurring: isRecurring,
+                       selectedFrequency: selectedFrequency,
+                       category: "General"
+                   )
+                
+                // Saves it to database
+                
+                context.insert(newExpense)
+                
+                do {
+                        try context.save()
+                        print("Expense saved: \(newExpense.name)")
+                        isPresented.toggle()
+                    } catch {
+                        print("Failed to save expense: \(error.localizedDescription)")
+                    }
+                
                 isPresented.toggle()
             }) {
                 // integrate the rounded rectangle as part of the button

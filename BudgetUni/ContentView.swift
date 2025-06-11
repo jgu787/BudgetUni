@@ -31,7 +31,7 @@ struct ContentView: View {
                         AnalyticsView()
                             .tag(3)
                             .toolbar(.hidden, for: .tabBar)
-                        Text("History")
+                        HistoryView()
                             .tag(4)
                             .toolbar(.hidden, for: .tabBar)
                     }

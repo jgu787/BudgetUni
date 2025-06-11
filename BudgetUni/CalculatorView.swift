@@ -42,7 +42,7 @@ struct CalculatorView: View {
     var body: some View {
         VStack(spacing: 35) {
             
-            Text("Budget Estimate").font(.title)
+            Text("Budget Estimator").font(.title)
 
             // Budget input
             TextField("Total budget", text: $totalBudgetInput)
@@ -115,8 +115,6 @@ struct CalculatorView: View {
         // Add the item to the data context
         context.insert(item)
         
-        //try? context.save()
-        
         do {
                 try context.save()
                 print("Item saved: \(item.name) - $\(item.expenseAmount)")
@@ -133,7 +131,6 @@ struct CalculatorView: View {
     // Delete item
     func deleteItem(_ item: BudgetingTools) {
         context.delete(item)
-        //try? context.save()
         
         do {
                 try context.save()
@@ -147,4 +144,3 @@ struct CalculatorView: View {
 #Preview {
     CalculatorView()
 }
-

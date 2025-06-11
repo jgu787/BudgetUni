@@ -22,20 +22,25 @@ let ontarioTax = 0.12
 public class BudgetingTools: Identifiable {
     
     // Variables
-    //public var id: UUID
+
     var userid: String
     var name: String
     var expenseAmount: Double
     var isBudget: Bool
     
+    //var streak: Int
+    //var highestStreak: Int
+    
     // Sends things to itself for storage
     // User should be string, name is string, budget is a double (parameters)
     init(user: String, name: String, expenseAmount: Double, isBudget: Bool = false) {
-        //self.id = UUID()
+        
         self.userid = user
         self.name = name
         self.expenseAmount = expenseAmount
         self.isBudget = isBudget
+        //self.streak = streak
+        //self.highestStreak = highestStreak
     }
     
 }

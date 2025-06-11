@@ -49,6 +49,15 @@ struct StreakView: View {
     }
 }
 
+// Update streak function (YM)
+
+func updateStreak() {
+    
+    // Beats highest streak
+    
+}
+
+
 #Preview {
     StreakView()
 }

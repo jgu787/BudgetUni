@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SelectMoneyAmountView: View {
     @Binding var isValid: Bool
-    @Binding var price: Float
+    @Binding var price: Double
     // temporary variable to hold a string version
     // of the float to check if it is a float value
     @State private var tempPrice: String = ""
@@ -53,7 +53,7 @@ struct SelectMoneyAmountView: View {
     
     // tests if the value is a float value
     func testIsNum(_ input: String) {
-        if let value = Float(input) as Float? {
+        if let value = Double(input) as Double? {
             price = value
             isValid = true
         }

@@ -27,14 +27,16 @@ struct CalculatorView: View {
     // User can input name and budget
     @State private var foodName = ""
     @State private var foodCost = ""
-    @State private var totalBudgetInput = ""
-    @State private var dataRefreshTrigger = false
     
     // Total budget
     var totalBudget: Double {
         budgets.first?.amount ?? 0.0
     }
     
+    @State private var totalBudgetInput: Double = 0.0
+    // Defaults it to start at $0
+    @State private var dataRefreshTrigger = false
+    @State private var isValid = true
     // Food costs
     
     var totalFoodCost: Double {
@@ -45,20 +47,26 @@ struct CalculatorView: View {
         totalBudget - totalFoodCost
     }
     
+    // helps reset a child view
+    @State private var childViewID = UUID()
+    
     var body: some View {
-        VStack(spacing: 35) {
+        VStack {
             
             Text("Budget Estimator").font(.title)
 
             // Budget input
-            TextField("Total budget", text: $totalBudgetInput)
-                .keyboardType(.decimalPad)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal)
-
-            Button("Set Budget") {
-                let newAmount = Double(totalBudgetInput) ?? 0.0
-
+            SelectMoneyAmountView(isValid: $isValid, price: $totalBudgetInput)
+                .id(childViewID)
+            
+            // add budget button
+            SaveButtonView(buttonName: "Set Budget",
+                           height: 30,
+                           width: 110,
+                           cornerRadius: 10,
+                           font: .callout ) {
+                let newAmount = totalBudgetInput
+                
                 // Checks whether budget is already in database, if so it will override and pull saved budget (first grabs first one saved)
                 
                 if let existingBudget = budgets.first {
@@ -72,11 +80,14 @@ struct CalculatorView: View {
                 do {
                     try context.save()
                     // Clears input after
-                    totalBudgetInput = ""
+                    totalBudgetInput = 0
+                    // resets the childview
+                    childViewID = UUID()
                 } catch {
                     print("Failed to save budget: \(error.localizedDescription)")
                 }
             }
+                           .disabled(!isValid)
 
             Divider()
 
@@ -91,7 +102,12 @@ struct CalculatorView: View {
                 .padding(.horizontal)
 
 
-            Button("Add Food Expense") {
+            // save food item button
+            SaveButtonView(buttonName: "Add Expense",
+                           height: 30,
+                           width: 110,
+                           cornerRadius: 10,
+                           font: .callout) {
                 addItem()
             }
 

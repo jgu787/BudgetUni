@@ -12,6 +12,7 @@ enum SideMenuOptionModel: Int, CaseIterable {
     case home
     case calculator
     case food
+    case spin
     case analyse
     case history
     
@@ -23,6 +24,8 @@ enum SideMenuOptionModel: Int, CaseIterable {
             return "Calculator"
         case.food:
             return "Foods"
+        case.spin:
+            return "Spin"
         case.analyse:
             return "Analytics"
         case.history:
@@ -39,6 +42,8 @@ enum SideMenuOptionModel: Int, CaseIterable {
             return "apps.ipad"
         case.food:
             return "map.fill"
+        case.spin:
+            return "circle.dotted.circle"
         case.analyse:
             return "chart.xyaxis.line"
         case.history:

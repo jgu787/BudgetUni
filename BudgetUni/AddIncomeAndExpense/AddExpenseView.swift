@@ -18,7 +18,7 @@ struct AddExpenseView: View {
 
     @Binding var isPresented: Bool
     @State private var name: String = ""
-    @State private var price: Float = 0.0
+    @State private var price: Double = 0.0
     @State private var date = Date()
     @State private var isRecurring: Bool = false
     @State private var selectedFrequency: String = "Daily"
@@ -59,7 +59,8 @@ struct AddExpenseView: View {
                                 date: $date)
             
             // Save button
-            Button(action: {
+            SaveButtonView() {
+                isPresented.toggle()
                 
                 let newExpense = Expenses(
                        expenses: Double(price),
@@ -81,18 +82,6 @@ struct AddExpenseView: View {
                     } catch {
                         print("Failed to save expense: \(error.localizedDescription)")
                     }
-                
-                isPresented.toggle()
-            }) {
-                // integrate the rounded rectangle as part of the button
-                RoundedRectangle(cornerRadius: 15)
-                    .frame(width:200,height: 50)
-                    .foregroundStyle(.black)
-                    .overlay(
-                        Text("save")
-                            .font(.title)
-                            .foregroundStyle(.white)
-                    )
             }
             .disabled(!isValid)
             

@@ -10,7 +10,7 @@ import SwiftUI
 struct AddIncomeView: View {
     @Binding var isPresented: Bool
     @State private var name: String = ""
-    @State private var income: Float = 0.0
+    @State private var income: Double = 0.0
     @State private var date = Date()
     @State private var isRecurring: Bool = false
     @State private var selectedFrequency: String = "Daily"
@@ -49,21 +49,12 @@ struct AddIncomeView: View {
                                 selectedFrequency: $selectedFrequency,
                                 date: $date)
             
-            // Save button
-            Button(action: {
+            //save button
+            SaveButtonView() {
                 isPresented.toggle()
-            }) {
-                // integrate the rounded rectangle as part of the button
-                RoundedRectangle(cornerRadius: 15)
-                    .frame(width:200,height: 50)
-                    .foregroundStyle(.black)
-                    .overlay(
-                        Text("save")
-                            .font(.title)
-                            .foregroundStyle(.white)
-                    )
             }
             .disabled(!isValid)
+
             
             Spacer()
         }

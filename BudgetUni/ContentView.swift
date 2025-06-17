@@ -18,27 +18,29 @@ struct ContentView: View {
             ZStack {
                 VStack {
                     // tabs for navigation
-                    TabView(selection: $selectedTab) {
-                        HomeView()
-                            .tag(0)
-                            .toolbar(.hidden, for: .tabBar)
-                        CalculatorView()
-                            .tag(1)
-                            .toolbar(.hidden, for: .tabBar)
-                        Text("Foods")
-                            .tag(2)
-                            .toolbar(.hidden, for: .tabBar)
-                        AnalyticsView()
-                            .tag(3)
-                            .toolbar(.hidden, for: .tabBar)
-                        HistoryView()
-                            .tag(4)
-                            .toolbar(.hidden, for: .tabBar)
+                    ZStack {
+                        switch selectedTab {
+                        case 0:
+                            HomeView()
+                        case 1:
+                            CalculatorView()
+                        case 2:
+                            FoodsView()
+                        case 3:
+                            GachaView()
+                        case 4:
+                            AnalyticsView()
+                        case 5:
+                            HistoryView()
+                        default:
+                            HomeView()
+                        }
                     }
                 }
                 
                 // layered sheets, side menu appears above
                 SideMenuView(isShowing: $showMenu, selectedTab: $selectedTab)
+                
             }
             .toolbar(showMenu ? .hidden : .visible, for: .navigationBar)
             .navigationTitle(SideMenuOptionModel(rawValue: selectedTab)!.title)

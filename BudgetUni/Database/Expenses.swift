@@ -45,6 +45,6 @@ public class Expenses: Identifiable {
     // Converts everything back into days
     var convertDays: Int {
         FrequencyConverter.frequencyInDays[selectedFrequency.lowercased()] ?? 0
+        
     }
-    
 }

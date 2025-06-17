@@ -29,6 +29,6 @@ public class Income: Identifiable {
         self.isRecurring = isRecurring
         self.selectedFrequency = selectedFrequency
         self.category = category
+        
     }
-    
 }

@@ -3,4 +3,69 @@
    uuid = "E2738ACF-B977-4AAA-8D6B-6D0BC1505824"
    type = "1"
    version = "2.0">
+<<<<<<< HEAD
+=======
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BCA262CD-8542-4A08-9885-F15BAD642B8E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetUni/Database/Expenses.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "Expenses"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "BCA262CD-8542-4A08-9885-F15BAD642B8E - 56dc81af9e3ccf19"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BudgetUni.Expenses.__allocating_init(expenses: Swift.Double) -&gt; BudgetUni.Expenses"
+                  moduleName = "BudgetUni.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yangminghuang/Documents/BudgetUni/BudgetUni/Database/Expenses.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "BCA262CD-8542-4A08-9885-F15BAD642B8E - c788c0078a650b7f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BudgetUni.Expenses.init(expenses: Swift.Double) -&gt; BudgetUni.Expenses"
+                  moduleName = "BudgetUni.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///var/folders/bg/29bqrc4x2hddgr07k821db2r0000gn/T/-245ea3.@__swiftmacro_9BudgetUni8Expenses5ModelfMm_.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2"
+                  endingLineNumber = "2">
+               </Location>
+               <Location
+                  uuid = "BCA262CD-8542-4A08-9885-F15BAD642B8E - 63563c673c58cefd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BudgetUni.Expenses.init(expenses: Swift.Double) -&gt; BudgetUni.Expenses"
+                  moduleName = "BudgetUni.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///var/folders/bg/29bqrc4x2hddgr07k821db2r0000gn/T/-7202eb.@__swiftmacro_9BudgetUni8Expenses5ModelfMm_.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2"
+                  endingLineNumber = "2">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+>>>>>>> Home_Page_With_DataBase
 </Bucket>

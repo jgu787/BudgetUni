@@ -53,11 +53,13 @@ struct StreakView: View {
 
 func updateStreak() {
     
+
     // Streak update
     
     //if (userinteraction == true and )
     
     // Beats highest streak
+    
 }
 
 

@@ -19,14 +19,21 @@ struct FoodsView: View {
     @State private var selectedRestaurant: MKMapItem?
     
     var body: some View {
-        Map(position: $cameraPosition) {
-            UserAnnotation()
-        }
-        .mapControls{
-            MapUserLocationButton()
-        }
-        .onAppear{
-            manager.requestWhenInUseAuthorization()
+        ZStack {
+            Map(position: $cameraPosition) {
+                UserAnnotation()
+            }
+            .mapControls{
+                MapUserLocationButton()
+            }
+            .onAppear{
+                manager.requestWhenInUseAuthorization()
+            }
+            
+            VStack {
+                Spacer()
+                MapsSearchBar()
+            }
         }
     }
     

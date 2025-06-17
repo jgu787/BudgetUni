@@ -29,6 +29,9 @@ struct GachaView: View {
             
             // displays only after user pulls
             if !canPull {
+                // after user pulls, canPull is set to false
+                // meaning user pulled and can display
+                // whether win or not
                 if isWin {
                     Text("WOW YOU WON!")
                     Text("You deserve a \(nameOfPrize) today!")

@@ -11,7 +11,7 @@ struct PullButtonView: View {
     let calendar = Calendar.current
     
     // map to database
-    @State var lastPull: Date? = nil
+    @State var lastPull: Date? = nil // last time user pulled
     @State var freq = 7
     @State var today = Calendar.current.startOfDay(for: Date())
     @State var daySincePrize: Int = 0
@@ -25,9 +25,11 @@ struct PullButtonView: View {
         // giant pull button
         Button(action: {
             // failsafe if user is new and has never pulled
+            // doesnt check if user can pull if no record of pull
             if lastPull != nil {
                 CanPullToday(lastPullDate: lastPull!,date: today)
             }
+            
             
             if lastPull == nil || canPull{
                 pullGacha()
@@ -63,6 +65,7 @@ struct PullButtonView: View {
         }
         .padding(.bottom)
         .onAppear {
+            // checks if user can pull when screen refresh
             if lastPull != nil {
                 CanPullToday(lastPullDate: lastPull!,date: today)
             }
@@ -75,6 +78,8 @@ struct PullButtonView: View {
         canPull = !calendar.isDate(lastPullDate, inSameDayAs: date)
     }
     
+    // function that generates random number to see
+    // if user wins or not
     func pullGacha() {
         if Int.random(in: 1..<freq+1) == freq {
             isWin = true

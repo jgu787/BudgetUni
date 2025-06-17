@@ -19,6 +19,7 @@ struct AddExpenseView: View {
     @Binding var isPresented: Bool
     @State private var name: String = ""
     @State private var price: Double = 0.0
+    @State private var category: String = "personal"
     @State private var date = Date()
     @State private var isRecurring: Bool = false
     @State private var selectedFrequency: String = "Daily"
@@ -54,6 +55,8 @@ struct AddExpenseView: View {
                     .background(.white)
             }
             
+            SelectCategoryView(selectedCategory: $category)
+            
             SelectFrequencyView(isRecurring: $isRecurring,
                                 selectedFrequency: $selectedFrequency,
                                 date: $date)
@@ -78,7 +81,6 @@ struct AddExpenseView: View {
                 do {
                         try context.save()
                         print("Expense saved: \(newExpense.name)")
-                        isPresented.toggle()
                     } catch {
                         print("Failed to save expense: \(error.localizedDescription)")
                     }

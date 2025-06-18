@@ -92,6 +92,8 @@ struct AddIncomeView: View {
      }
 }
 
+// Preview on right side of screen
+
 #Preview {
     AddExpenseView(isPresented: .constant(true))
 }

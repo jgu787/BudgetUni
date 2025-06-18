@@ -14,11 +14,11 @@ import SwiftData
 public class Breakdown: Identifiable {
     
     // Variables
-    var food: Double
-    var living: Double
-    var personal: Double
-    var education: Double
-    var miscellaneous: Double
+    @Attribute var food: Double
+    @Attribute var living: Double
+    @Attribute var personal: Double
+    @Attribute var education: Double
+    @Attribute var miscellaneous: Double
     
     // Sets default parameters when nothing entered
     init(food: Double = 0.0, living: Double = 0.0, personal: Double = 0.0, education: Double = 0.0,

@@ -5,37 +5,34 @@
 //  Created by Jiamin Gu on 2025-05-27.
 //
 
+// Imports
+
 import SwiftUI
 import Charts
 import SwiftData
 
 // shows a breakdown of where all your money is going towards
 struct SpendingBreakdownChart: View {
-    /*
-    let breakdowns = [
-        ("Food", 100),
-        ("Living", 300),
-        ("Personal", 100),
-        ("Education",400)
-    ]
-     */
     
+    @Environment(\.modelContext) private var context
+
     // Fetches the data from breakdown category
     @Query private var breakdownItems: [Breakdown]
+    @State private var breakdown: Breakdown? = nil
     
+    // Use the observed @State breakdown now
     var breakdowns: [(String, Double)] {
-           guard let breakdown = breakdownItems.first else { return [] }
-           
-           return [
-               ("Food", breakdown.food),
-               ("Living", breakdown.living),
-               ("Personal", breakdown.personal),
-               ("Education", breakdown.education),
-               ("Misc", breakdown.miscellaneous)
-           ].filter { $0.1 > 0 }
+        guard let breakdown = breakdown else { return [] }
         
-        // Only show categories with data
-       }
+        return [
+            ("Food", breakdown.food),
+            ("Living", breakdown.living),
+            ("Personal", breakdown.personal),
+            ("Education", breakdown.education),
+            ("Misc", breakdown.miscellaneous)
+        ]
+        .filter { $0.1 > 0 }
+    }
     
     var body: some View {
         GroupBox {
@@ -44,7 +41,6 @@ struct SpendingBreakdownChart: View {
                 Text("Weekly Spending Breakdown")
                     .font(.title3)
                     .padding(.leading)
-                
                 Spacer()
             }
             .fontWeight(.semibold)
@@ -53,17 +49,20 @@ struct SpendingBreakdownChart: View {
             Chart {
                 ForEach(breakdowns, id: \.0) { breakdown in
                     SectorMark(
-                        angle: .value(breakdown.0, breakdown.1),
+                        angle: .value("Amount", breakdown.1),
                         innerRadius: .ratio(0.7),
                         angularInset: 1
                     )
-                    .foregroundStyle(by: .value(breakdown.0, breakdown.0))
+                    .foregroundStyle(by: .value("Category", breakdown.0))
                     .cornerRadius(5)
                 }
             }
             .scaledToFit()
         }
         .padding()
+        .onAppear {
+            breakdown = breakdownItems.first
+        }
     }
 }
 

@@ -10,6 +10,9 @@ import SwiftUI
 // this is the analytics view which shows
 // breakdowns of money and its uses
 struct AnalyticsView: View {
+
+    @State private var refreshTrigger = UUID()
+    
     var body: some View {
         ScrollView {
             IncomeVsExpenseGraphView()

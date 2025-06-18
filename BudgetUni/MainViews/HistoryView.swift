@@ -17,7 +17,11 @@ struct HistoryView: View {
     @Environment(\.modelContext) private var context
     
     // Query fetches data from database
-    @Query(filter: #Predicate<Expenses> { _ in true }, animation: .default) private var expenses: [Expenses]
+    @Query(filter: #Predicate<Expenses> { _ in true },
+           // Reverses historyview from top to bottom
+           sort: [SortDescriptor(\Expenses.date, order: .reverse)],
+           animation: .default) private var expenses: [Expenses]
+    
     
     // References item selected for deletion
     @State private var expenseToDelete: Expenses?
@@ -83,14 +87,50 @@ struct HistoryView: View {
 
     // Deletes that specific index in expenses database
     func deleteExpense(_ expense: Expenses) {
+        updateBreakdown(expense)
         // Marks for deletion
         context.delete(expense)
-        do {
+                do {
             // ACTUALLY DELETES IT
             try context.save()
             print("Deleted expense: \(expense.name)")
+            // Calls update breakdown (analytics) function
         } catch {
             print("Failed to delete expense: \(error.localizedDescription)")
+        }
+    }
+    
+    // Deletes specific item from analytics in pi chart
+    func updateBreakdown(_ deletedExpense: Expenses) {
+        do {
+            let fetchRequest = FetchDescriptor<Breakdown>()
+            if let breakdown = try context.fetch(fetchRequest).first {
+                // Subtract deleted part from respective
+                // category
+                switch deletedExpense.category {
+                case "Food":
+                    breakdown.food -= deletedExpense.expenses
+                    breakdown.food = max(0, breakdown.food)
+                case "Living":
+                    breakdown.living -= deletedExpense.expenses
+                    breakdown.living = max(0, breakdown.living)
+                case "Personal":
+                    breakdown.personal -= deletedExpense.expenses
+                    breakdown.personal = max(0, breakdown.personal)
+                case "Education":
+                    breakdown.education -= deletedExpense.expenses
+                    breakdown.education = max(0, breakdown.education)
+                case "Misc":
+                    breakdown.miscellaneous -= deletedExpense.expenses
+                    breakdown.miscellaneous = max(0, breakdown.miscellaneous)
+                default:
+                    break
+                }
+                
+                try context.save()
+            }
+        } catch {
+            print("Failed to update breakdown after deletion: \(error.localizedDescription)")
         }
     }
 }

@@ -5,7 +5,10 @@
 //  Created by Jiamin Gu on 2025-06-15.
 //
 
+// Imports
+
 import SwiftUI
+import SwiftData
 
 struct GachaView: View {
     // need to read from database

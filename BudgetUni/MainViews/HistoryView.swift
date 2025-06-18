@@ -28,10 +28,6 @@ struct HistoryView: View {
     var body: some View {
         VStack(spacing: 35) {
             
-            Text("Spending").font(.title)
-            
-            Divider()
-            
             // Creates scrollable list
             List {
                 // Loops over expenses and builds row for each
@@ -45,10 +41,13 @@ struct HistoryView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
+                        .padding(.leading)
                         Spacer()
                         Text("$\(expense.expenses, specifier: "%.2f")")
                             .foregroundColor(.red)
+                            .padding(.trailing)
                     }
+                    .padding(.vertical)
                 }
                 
                 // Prepares index (position) for deletion
@@ -62,9 +61,7 @@ struct HistoryView: View {
                 }
             }
             
-            Divider()
         }
-        .padding()
         
         // Confirmation alert
                 .alert("Are you sure you want to delete this expense?", isPresented: $showingDeleteAlert, actions: {

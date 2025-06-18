@@ -111,6 +111,8 @@ struct CalculatorView: View {
                 addItem()
             }
 
+            Divider()
+            
             List {
                 ForEach (items) { item in
                     
@@ -128,6 +130,7 @@ struct CalculatorView: View {
                     }
                 }
             }
+            .clipShape(RoundedRectangle(cornerRadius: 12))
             .id(dataRefreshTrigger)
 
             Divider()

@@ -5,26 +5,38 @@
 //  Created by Jiamin Gu on 2025-05-23.
 //
 
+// Imports
+
 import SwiftUI
 import Charts
+import SwiftData
 
 struct SpendingHabitsGraphView: View {
-    let habits = [
-            ("Sun", 40.16),
-            ("Mon", 12),
-            ("Tue", 30.33),
-            ("Wed", 15.5),
-            ("Thu", 1.75),
-            ("Fri", 17.49),
-            ("Sat", 50.00)
-        ]
     
-    //calculates the average spending
+    // Fetching all expenses from the database
+    @Query private var expenseItems: [Expenses]
+    
+    var expensesEachDay: [(String, Double)] {
+            let calendar = Calendar.current
+            let grouped = Dictionary(grouping: expenseItems) { expense in
+                calendar.component(.weekday, from: expense.date)
+            }
+            return (1...7).map { weekdayIndex in
+                let weekdayName = calendar.shortWeekdaySymbols[weekdayIndex - 1]
+                let total = grouped[weekdayIndex]?.reduce(0) { $0 + $1.expenses } ?? 0
+                return (weekdayName, total)
+            }
+        }
+    
+    // Calculates the average spending
     // $0 refers to current tuple its mapping
     // reduce combines the elements starting at total = 0
+    
     var average: Double {
-        habits.map { $0.1 }.reduce(0, +) / Double(habits.count)
-    }
+            let total = expensesEachDay.reduce(0) { $0 + $1.1 }
+        // Calculates the average of the red line (per day)
+            return total / 7
+        }
     
     var body: some View {
         GroupBox {
@@ -42,9 +54,9 @@ struct SpendingHabitsGraphView: View {
             
             Chart {
                 // loops through habits and graphs the habit of each day
-               ForEach(habits,id: \.0) { habit in
-                   BarMark(x: .value("Day",habit.0),
-                           y: .value("Expense",habit.1))
+               ForEach(expensesEachDay,id: \.0) { amount in
+                   BarMark(x: .value("Day", amount.0),
+                           y: .value("Expense",amount.1))
                    .foregroundStyle(.blue)
                }
                

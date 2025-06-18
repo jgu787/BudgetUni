@@ -74,9 +74,41 @@ struct AddExpenseView: View {
                        category: "General"
                    )
                 
+            
                 // Saves it to database
                 
                 context.insert(newExpense)
+                
+                // Updates or fetches breakdown entry from
+                // each individual category to see whether
+                // it is there or not before adding to a new context and saving to memory
+                    var breakdown: Breakdown
+                    if let existing = try? context.fetch(FetchDescriptor<Breakdown>()).first {
+                        breakdown = existing
+                    } else {
+                        breakdown = Breakdown()
+                        context.insert(breakdown)
+                    }
+                    
+                    // Append to speicifc category and update value of those once done
+                    switch category.lowercased() {
+                    case "food":
+                        breakdown.food += newExpense.expenses
+                    case "living":
+                        breakdown.living += newExpense.expenses
+                    case "personal":
+                        breakdown.personal += newExpense.expenses
+                    case "education":
+                        breakdown.education += newExpense.expenses
+                    case "miscellaneous", "misc":
+                        breakdown.miscellaneous += newExpense.expenses
+                        
+                    // If none of the categories are matched (failsafe method)
+                    default:
+                        print("Unknown category: \(category)")
+                    }
+                
+                // Saves context
                 
                 do {
                         try context.save()

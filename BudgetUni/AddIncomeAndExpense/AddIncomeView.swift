@@ -5,12 +5,19 @@
 //  Created by Jiamin Gu on 2025-05-19.
 //
 
+// Imports
 import SwiftUI
+import SwiftData
 
 struct AddIncomeView: View {
+    
+    // Provides access to database
+    @Environment(\.modelContext) private var context
+    
+
     @Binding var isPresented: Bool
     @State private var name: String = ""
-    @State private var income: Double = 0.0
+    @State private var price: Double = 0.0
     @State private var date = Date()
     @State private var isRecurring: Bool = false
     @State private var selectedFrequency: String = "Daily"
@@ -29,39 +36,63 @@ struct AddIncomeView: View {
                 .foregroundStyle(.black)
                 
                 Spacer()
-                Text("New Income")
+                Text("New Income Stream")
                     .font(.headline)
                 Spacer()
                 Text("  ")
             }
             .padding(.top)
-            
-            SelectMoneyAmountView(isValid: $isValid, price: $income)
-            
-            // name of the income
+    
+            SelectMoneyAmountView(isValid: $isValid, price: $price)
+           
+            // name of the item
             HStack {
                 Text("Description: ")
-                TextField("Ex. Job 1" , text: $name)
+                   .bold()
+                TextField("Ex. Part-time Job" , text: $name)
+                    .background(.white)
             }
             
-            // how often this payment would be received
             SelectFrequencyView(isRecurring: $isRecurring,
                                 selectedFrequency: $selectedFrequency,
                                 date: $date)
             
-            //save button
+            // Save button
             SaveButtonView() {
                 isPresented.toggle()
+                
+                let newIncome = Income(
+                    income: Double(price),
+                    name: name,
+                    date: date,
+                    isRecurring: isRecurring,
+                    selectedFrequency: selectedFrequency
+                )
+            
+            
+                // Saves it to database
+                
+                context.insert(newIncome)
+                
+                // Saves context
+                
+                do {
+                        try context.save()
+                        print("Income stream saved: \(newIncome.name)")
+                    } catch {
+                        print("Failed to save income stream: \(error.localizedDescription)")
+                    }
             }
             .disabled(!isValid)
-
             
             Spacer()
-        }
+         }
         .padding()
-    }
+                
+     }
 }
 
 #Preview {
-    AddIncomeView(isPresented: .constant(true))
+    AddExpenseView(isPresented: .constant(true))
 }
+

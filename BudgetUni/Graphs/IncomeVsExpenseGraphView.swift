@@ -5,16 +5,33 @@
 //  Created by Jiamin Gu on 2025-05-23.
 //
 
+// Imports
+
 import SwiftUI
 import Charts
+import SwiftData
 
 // Shows overall expense compared to income
 struct IncomeVsExpenseGraphView: View {
-    var expenses: Double = 345.95
-    var income: Double = 376.58
+    
+    // Helps to fetch both income and expense items
+    // from their respective models in database
+        @Query private var incomeItems: [Income]
+        @Query private var expenseItems: [Expenses]
+    
+    //var expenses: Double = 345.95
+    //var income: Double = 376.58
+    
+    var totalIncome: Double {
+        incomeItems.reduce(0) { $0 + $1.income }
+    }
+
+    var totalExpenses: Double {
+        expenseItems.reduce(0) { $0 + $1.expenses }
+    }
     
     var balance: Double {
-        return income - expenses
+        return totalIncome - totalExpenses
         }
     
     var body: some View {
@@ -35,10 +52,10 @@ struct IncomeVsExpenseGraphView: View {
             
             // displays income vs expense graph
             Chart{
-                BarMark(x: .value("Income", income))
+                BarMark(x: .value("Income", totalIncome))
                 .foregroundStyle(.green)
                 
-                BarMark(x: .value("Expense", expenses))
+                BarMark(x: .value("Expense", totalExpenses))
                 .foregroundStyle(.red)
             }
             .frame(height: 30)

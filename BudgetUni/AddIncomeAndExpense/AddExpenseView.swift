@@ -70,13 +70,7 @@ struct AddExpenseView: View {
             // Save button
             SaveButtonView() {
                 
-                var currentStreak: Streak
-                if let existingStreak = streaks.first {
-                    currentStreak = existingStreak
-                } else {
-                    currentStreak = Streak(actionThisWeek: false, streak: 0, highestStreak: 0, streakRefreshDay: findNextMonday(), onBudget: false)
-                        context.insert(currentStreak)
-                }
+                let currentStreak = checkIfStreakInit(context: context, streaks: streaks)
                 currentStreak.actionThisWeek = true
                 
                 isPresented.toggle()
@@ -98,32 +92,32 @@ struct AddExpenseView: View {
                 // Updates or fetches breakdown entry from
                 // each individual category to see whether
                 // it is there or not before adding to a new context and saving to memory
-                    var breakdown: Breakdown
-                    if let existing = try? context.fetch(FetchDescriptor<Breakdown>()).first {
-                        breakdown = existing
-                    } else {
-                        breakdown = Breakdown()
-                        context.insert(breakdown)
-                    }
-                    
-                    // Append to speicifc category and update value of those once done
-                    switch category.lowercased() {
-                    case "food":
-                        breakdown.food += newExpense.expenses
-                    case "living":
-                        breakdown.living += newExpense.expenses
-                    case "personal":
-                        breakdown.personal += newExpense.expenses
-                    case "education":
-                        breakdown.education += newExpense.expenses
-                    case "miscellaneous", "misc":
-                        breakdown.miscellaneous += newExpense.expenses
-                        
-                    // If none of the categories are matched (failsafe method)
-                    default:
-                        print("Unknown category: \(category)")
-                    }
+                var breakdown: Breakdown
+                if let existing = try? context.fetch(FetchDescriptor<Breakdown>()).first {
+                    breakdown = existing
+                } else {
+                    breakdown = Breakdown()
+                    context.insert(breakdown)
+                }
                 
+                // Append to speicifc category and update value of those once done
+                switch category.lowercased() {
+                case "food":
+                    breakdown.food += newExpense.expenses
+                case "living":
+                    breakdown.living += newExpense.expenses
+                case "personal":
+                    breakdown.personal += newExpense.expenses
+                case "education":
+                    breakdown.education += newExpense.expenses
+                case "miscellaneous", "misc":
+                    breakdown.miscellaneous += newExpense.expenses
+                    
+                // If none of the categories are matched (failsafe method)
+                default:
+                    print("Unknown category: \(category)")
+                }
+            
                 // Saves context
                 
                 do {
@@ -141,16 +135,6 @@ struct AddExpenseView: View {
                 
      }
     
-    func findNextMonday() -> Date {
-        // finds the following monday
-        let calendar = Calendar.current
-        let nextRefresh = calendar.nextDate(
-            after: Date(),
-            matching: DateComponents(weekday: 2),
-            matchingPolicy: .nextTime
-        ) ?? Date()
-        return nextRefresh
-    }
 }
 
 #Preview {

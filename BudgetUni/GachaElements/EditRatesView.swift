@@ -14,10 +14,7 @@ struct EditRatesView: View {
     @Environment(\.modelContext) private var modelContext
     
     @Binding var showEditRates: Bool
-    
-    // need to map to database
     @Bindable var gacha: Gacha
-    // end
     
     @State var tempFreq: String = ""
     @State var tempName: String = ""

@@ -105,6 +105,7 @@ struct GachaView: View {
                     .shadow(radius: 5)
             )
             
+            /*
             // NEW Reset Gacha button, fixed:
             Button("Reset Gacha") {
                 for g in gachaItems {
@@ -132,6 +133,8 @@ struct GachaView: View {
             .foregroundColor(.red)
             .background(Color.red.opacity(0.1))
             .cornerRadius(10)
+             
+             */
             
         }
         .onAppear {

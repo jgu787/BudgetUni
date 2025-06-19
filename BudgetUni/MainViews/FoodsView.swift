@@ -14,26 +14,20 @@ struct FoodsView: View {
     let manager = CLLocationManager()
     @State private var cameraPosition: MapCameraPosition =
         .userLocation(fallback: .automatic)
-    @State private var region = MKCoordinateRegion()
-    @State private var restaurants: [MKMapItem] = []
-    @State private var selectedRestaurant: MKMapItem?
     
     var body: some View {
-        ZStack {
-            Map(position: $cameraPosition) {
-                UserAnnotation()
-            }
-            .mapControls{
-                MapUserLocationButton()
-            }
-            .onAppear{
-                manager.requestWhenInUseAuthorization()
-            }
-            
-            VStack {
-                Spacer()
-                MapsSearchBar()
-            }
+        Map(position: $cameraPosition) {
+            UserAnnotation()
+        }
+        // button at top right to bring user
+        // back to their current location
+        .mapControls{
+            MapUserLocationButton()
+        }
+        .onAppear{
+            // requests the user's location to showcase
+            // areas of interest nearby
+            manager.requestWhenInUseAuthorization()
         }
     }
     

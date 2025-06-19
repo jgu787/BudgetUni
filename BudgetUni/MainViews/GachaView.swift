@@ -104,38 +104,6 @@ struct GachaView: View {
                     .fill(Color.black)
                     .shadow(radius: 5)
             )
-            
-            /*
-            // NEW Reset Gacha button, fixed:
-            Button("Reset Gacha") {
-                for g in gachaItems {
-                    context.delete(g)
-                }
-                
-                let newGacha = Gacha(
-                    frequency: 7,
-                    pity: 0,
-                    nameOfPrize: "Bubble Tea",
-                    date: .now,
-                    lastPullDate: nil
-                )
-                context.insert(newGacha)
-                try? context.save()
-                
-                // Reset all states cleanly:
-                canPull = true
-                isWin = false
-                showAlreadyPulledMsg = false
-                showPrizeReveal = false  // <---- critical to reset prize display state
-                
-            }
-            .padding()
-            .foregroundColor(.red)
-            .background(Color.red.opacity(0.1))
-            .cornerRadius(10)
-             
-             */
-            
         }
         .onAppear {
             gachaExists()

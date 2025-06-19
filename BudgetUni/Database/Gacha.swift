@@ -10,7 +10,7 @@
 import Foundation
 import SwiftData
 
-// Creates new instance of data model and assigns its properties this way
+// Marks this class to be stored in database
 @Model
 public class Gacha: Identifiable {
     
@@ -21,6 +21,7 @@ public class Gacha: Identifiable {
     var date: Date
     var lastPullDate: Date?
     
+    // Creates new instance of data model and assigns its properties this way
     init(frequency: Int, pity: Int, nameOfPrize: String, date: Date, lastPullDate: Date?) {
         self.frequency = frequency
         self.pity = pity

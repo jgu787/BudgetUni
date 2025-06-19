@@ -19,7 +19,7 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             HStack{
-                // Home Content
+                // Home Contents
                 VStack {
                     HStack {
                         Text("Welcome Back!")
@@ -37,18 +37,18 @@ struct HomeView: View {
         }
         
         .onAppear {
-                    if streaks.isEmpty {
-                        let newStreak = Streak(
-                            actionThisWeek: false,
-                            streak: 0,
-                            highestStreak: 0,
-                            streakRefreshDay: Date(),
-                            onBudget: false
-                        )
-                        context.insert(newStreak)
-                        try? context.save()
-                    }
-                }
+            if streaks.isEmpty {
+                let newStreak = Streak(
+                    actionThisWeek: false,
+                    streak: 0,
+                    highestStreak: 0,
+                    streakRefreshDay: Date(),
+                    onBudget: false
+                )
+                context.insert(newStreak)
+                try? context.save()
+            }
+        }
     }
 }
 

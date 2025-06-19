@@ -6,6 +6,7 @@
 //
 // stores the name and icon of each tab in the side menu
 
+// imports
 import Foundation
 
 enum SideMenuOptionModel: Int, CaseIterable {

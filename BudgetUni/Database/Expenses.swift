@@ -22,9 +22,11 @@ struct FrequencyConverter {
         "annually": 365
     ]
 }
+
+// Marks this to be stored in database
 @Model
 public class Expenses: Identifiable {
-    
+
     var name: String
     var date: Date
     var isRecurring: Bool
@@ -32,10 +34,10 @@ public class Expenses: Identifiable {
     var selectedFrequency: String
     var category: String
     var expenses: Double
-    
+
     init(expenses: Double = 0.0, name: String, date: Date, isRecurring: Bool,
          selectedFrequency: String, category: String) {
-        
+
         self.expenses = expenses
         self.name = name
         self.date = date
@@ -43,10 +45,10 @@ public class Expenses: Identifiable {
         self.selectedFrequency = selectedFrequency
         self.category = category
     }
-    
+
     // Converts everything back into days
     var convertDays: Int {
         FrequencyConverter.frequencyInDays[selectedFrequency.lowercased()] ?? 0
-        
+
     }
 }

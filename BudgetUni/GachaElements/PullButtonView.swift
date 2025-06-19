@@ -26,11 +26,11 @@ struct PullButtonView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            // button + lootbox animation display
+            // Button + lootbox animation display
             ZStack {
                 // Animation aspect
                 if isRolling {
-                    Image("dankDailyBox") // Your custom lootbox PNG asset name here
+                    Image("dankDailyBox")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 280, height: 280)
@@ -54,7 +54,6 @@ struct PullButtonView: View {
                                 .transition(.scale.combined(with: .opacity))
                                 .padding()
                             
-                            // Confetti emoji effect
                             Text("🎉")
                                 .font(.system(size: 100))
                                 .opacity(0.8)
@@ -88,6 +87,7 @@ struct PullButtonView: View {
                         }
 
                         // if user is allowed to pull
+                        // let the pull go ahead
                         if canPull {
                             isRolling = true
                             showPrizeReveal = false
@@ -110,7 +110,7 @@ struct PullButtonView: View {
                             }
                         }
                     }) {
-                        // button decoration
+                        // Pull button itself
                         ZStack {
                             // outer gray circle
                             Circle()
@@ -123,7 +123,7 @@ struct PullButtonView: View {
                                 .frame(width: 300, height: 300)
                                 .shadow(radius: 10)
 
-                            // pull text
+                            // Button text
                             Text("Pull")
                                 .font(.system(size: 100))
                                 .bold()
@@ -133,7 +133,7 @@ struct PullButtonView: View {
                 }
             }
 
-            // Optional: Add a reset button if desired
+            // Try again button
             if showPrizeReveal {
                 Button("Try Again") {
                     withAnimation {
@@ -164,24 +164,29 @@ struct PullButtonView: View {
     // function that generates random number or determine whether max pity has been reached to see
     // if user wins or not
     func pullGacha() {
+        // Win condition when gacha pulled
         if Int.random(in: 1..<gacha.frequency + 1) == gacha.frequency {
             isWin = true
             gacha.pity = 0
         }
+        // Win, but is it really a win? (pity system)
         // pity if user is very unlucky
         else if gacha.pity == gacha.frequency {
             isWin = true
             gacha.pity = 0
+        // Lose condition
         } else {
             gacha.pity += 1
             isWin = false
         }
 
-        // store the last pull date (start of day)
+        // Store the last pull date (start of day)
         gacha.lastPullDate = calendar.startOfDay(for: Date())
         canPull = false
     }
 }
+
+// Preview displayed on right of screen
 
 #Preview {
     PullButtonView(

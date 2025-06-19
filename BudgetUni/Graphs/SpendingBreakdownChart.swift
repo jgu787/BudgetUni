@@ -48,6 +48,7 @@ struct SpendingBreakdownChart: View {
             Chart {
                 ForEach(breakdowns, id: \.0) { breakdown in
                     SectorMark(
+                        // calculates angle by total of each category
                         angle: .value("Amount", breakdown.1),
                         innerRadius: .ratio(0.7),
                         angularInset: 1

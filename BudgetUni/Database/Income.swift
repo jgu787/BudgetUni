@@ -10,6 +10,7 @@
 import Foundation
 import SwiftData
 
+// Marks this class to be stored in database
 @Model
 public class Income: Identifiable {
     

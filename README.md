@@ -13,3 +13,14 @@ BudgetUni is a Swift application designed to help university students better man
 - charts to show whether you are staying on budget or not
 - user input system to track spending and saving
 
+## Some Photos of the App
+
+<table>
+  <tr>
+    <td><img src="appPhotos/home.jpg" alt="homePage" width="200"/></td>
+    <td><img src="appPhotos/add.jpg" alt="addPage" width="200"/></td>
+    <td><img src="appPhotos/gacha.jpg" alt="gachaPage" width="200"/></td>
+    <td><img src="appPhotos/history.jpg" alt="historyPage" width="200"/></td>
+    <td><img src="appPhotos/analytics.jpg" alt="analyticsPage" width="200"/></td>
+  </tr>
+</table>

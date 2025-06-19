@@ -7,7 +7,6 @@
 
 // Imports
 
-/*
 import SwiftUI
 import SwiftData
 
@@ -28,113 +27,7 @@ struct GachaView: View {
     @State var showAlreadyPulledMsg = false
     @State var canPull = true
     @State var showEditRates = false
-    
-    // Sets default gacha settings before edit
-    func gachaExists() {
-        if gachaItems.isEmpty {
-            let defaultGacha = Gacha(frequency: 7, pity: 0, nameOfPrize: "Bubble Tea", date: .now)
-            context.insert(defaultGacha)
-            do {
-                try context.save()
-            } catch {
-                print("Failed to save default Gacha: \(error)")
-            }
-        }
-    }
-    
-    var body: some View {
-        VStack {
-            
-            // Text box at top
-            Text("Will I get \(gacha?.nameOfPrize ?? "______") today?")
-                .font(.title)
-                .padding(.bottom)
-            
-            PullButtonView(gacha: gacha, isWin: $isWin, showAlreadyPulledMsg: $showAlreadyPulledMsg, canPull: $canPull)
-            .padding(.bottom)
-            
-            // displays only after user pulls
-            if !canPull {
-                // after user pulls, canPull is set to false
-                // meaning user pulled and can display
-                // whether win or not
-                if isWin {
-                    Text("WOW YOU WON!")
-                    Text("You deserve a \(gacha?.nameOfPrize ?? "_____") today!")
-                }
-                else {
-                    Text("Womp Womp, better luck tomorrow!")
-                }
-            }
-            // leaves a message telling the user they can pull
-            else {
-                Text("You can pull once today")
-            }
-            
-            // tells user they already pulled that day
-            if showAlreadyPulledMsg {
-                Text("You already pulled today. Try again tomorrow!")
-                    .foregroundStyle(.red)
-            }
-            Spacer()
-            
-            // edit rates button
-            Button(action: {
-                showEditRates.toggle()
-            }) {
-                HStack {
-                    Text("Edit Rates")
-                    Image(systemName: "pencil")
-                }
-                .font(.title)
-                .bold()
-                .foregroundColor(.white)
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.black)
-                    .shadow(radius: 5)
-            )
-            
-        }
-        // When everything appears
-        .onAppear {
-            gachaExists()
-        }
-        // pops up the Edit rates menu
-        .sheet(isPresented: $showEditRates) {
-            if let gacha = gacha {
-                EditRatesView(showEditRates: $showEditRates, gacha: gacha)
-            } else {
-                Text("No gacha settings found.")
-                    .padding()
-            }
-        }
-    }
-}
-*/
-
-import SwiftUI
-import SwiftData
-
-struct GachaView: View {
-    
-    // Gives it access to view everything
-    @Environment(\.modelContext) private var context
-    
-    // Gives it access to gacha database
-    @Query private var gachaItems: [Gacha]
-    
-    // Need to read from database
-    var gacha: Gacha? {
-        gachaItems.first
-    }
-    
-    @State var isWin = false
-    @State var showAlreadyPulledMsg = false
-    @State var canPull = true
-    @State var showEditRates = false
+    @State var showPrizeReveal = false  // <-- add this to state
     
     // Sets default gacha settings before edit
     func gachaExists() {
@@ -163,7 +56,8 @@ struct GachaView: View {
                     gacha: gacha,
                     isWin: $isWin,
                     showAlreadyPulledMsg: $showAlreadyPulledMsg,
-                    canPull: $canPull
+                    canPull: $canPull,
+                    showPrizeReveal: $showPrizeReveal  // <-- pass it here
                 )
                 .padding(.bottom)
             } else {
@@ -174,19 +68,13 @@ struct GachaView: View {
             
             // displays only after user pulls
             if !canPull {
-                // after user pulls, canPull is set to false
-                // meaning user pulled and can display
-                // whether win or not
                 if isWin {
                     Text("WOW YOU WON!")
                     Text("You deserve a \(gacha?.nameOfPrize ?? "_____") today!")
-                }
-                else {
+                } else {
                     Text("Womp Womp, better luck tomorrow!")
                 }
-            }
-            // leaves a message telling the user they can pull
-            else {
+            } else {
                 Text("You can pull once today")
             }
             
@@ -198,7 +86,7 @@ struct GachaView: View {
 
             Spacer()
             
-            // edit rates button
+            // Edit rates button
             Button(action: {
                 showEditRates.toggle()
             }) {
@@ -217,8 +105,8 @@ struct GachaView: View {
                     .shadow(radius: 5)
             )
             
-            // 🔁 Reset gacha button (for testing)
-            Button("🔄 Reset Gacha for Testing") {
+            // NEW Reset Gacha button, fixed:
+            Button("Reset Gacha") {
                 for g in gachaItems {
                     context.delete(g)
                 }
@@ -232,21 +120,23 @@ struct GachaView: View {
                 )
                 context.insert(newGacha)
                 try? context.save()
-                canPull = true // allow pull again immediately
+                
+                // Reset all states cleanly:
+                canPull = true
                 isWin = false
                 showAlreadyPulledMsg = false
+                showPrizeReveal = false  // <---- critical to reset prize display state
+                
             }
             .padding()
             .foregroundColor(.red)
             .background(Color.red.opacity(0.1))
             .cornerRadius(10)
-
+            
         }
-        // When everything appears
         .onAppear {
             gachaExists()
         }
-        // pops up the Edit rates menu
         .sheet(isPresented: $showEditRates) {
             if let gacha = gacha {
                 EditRatesView(showEditRates: $showEditRates, gacha: gacha)

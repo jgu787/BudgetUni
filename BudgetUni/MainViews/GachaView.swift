@@ -195,6 +195,7 @@ struct GachaView: View {
                 Text("You already pulled today. Try again tomorrow!")
                     .foregroundStyle(.red)
             }
+
             Spacer()
             
             // edit rates button
@@ -216,6 +217,30 @@ struct GachaView: View {
                     .shadow(radius: 5)
             )
             
+            // 🔁 Reset gacha button (for testing)
+            Button("🔄 Reset Gacha for Testing") {
+                for g in gachaItems {
+                    context.delete(g)
+                }
+                
+                let newGacha = Gacha(
+                    frequency: 7,
+                    pity: 0,
+                    nameOfPrize: "Bubble Tea",
+                    date: .now,
+                    lastPullDate: nil
+                )
+                context.insert(newGacha)
+                try? context.save()
+                canPull = true // allow pull again immediately
+                isWin = false
+                showAlreadyPulledMsg = false
+            }
+            .padding()
+            .foregroundColor(.red)
+            .background(Color.red.opacity(0.1))
+            .cornerRadius(10)
+
         }
         // When everything appears
         .onAppear {

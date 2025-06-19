@@ -16,6 +16,6 @@ struct BudgetUniApp: App {
         }
         // Tracks the rest of the database
         .modelContainer(for: [BudgetingTools.self, TotalBudget.self, Expenses.self,
-                              Income.self, Breakdown.self, Gacha.self])
+                              Income.self, Breakdown.self, Gacha.self, Streak.self])
     }
 }

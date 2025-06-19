@@ -14,6 +14,8 @@ struct AddIncomeView: View {
     // Provides access to database
     @Environment(\.modelContext) private var context
     
+    // Provides access to streak database
+    @Query private var streaks: [Streak]
 
     @Binding var isPresented: Bool
     @State private var name: String = ""
@@ -61,7 +63,15 @@ struct AddIncomeView: View {
             
             // Save button
             SaveButtonView() {
-                actionThisWeek = true
+                var currentStreak: Streak
+                if let existingStreak = streaks.first {
+                    currentStreak = existingStreak
+                } else {
+                    currentStreak = Streak(actionThisWeek: true, streak: 0, highestStreak: 0, streakRefreshDay: Date())
+                        context.insert(currentStreak)
+                }
+                currentStreak.actionThisWeek = true
+                
                 isPresented.toggle()
                 
                 let newIncome = Income(

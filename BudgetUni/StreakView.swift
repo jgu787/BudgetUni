@@ -5,14 +5,16 @@
 //  Created by Jiamin Gu on 2025-06-06.
 //
 
+// Imports
+
 import SwiftUI
+import SwiftData
 
 struct StreakView: View {
-    @State private var streak: Int = 0
-    @State private var highestStreak: Int = 0
     
-    @State private var actionThisWeek: Bool = false
-    @State private var streakRefreshDay: Date = Date()
+    // Gives access to streak database
+    @Environment(\.modelContext) private var context
+    @Query private var streaks: [Streak]
     
     var body: some View {
         //streak view
@@ -24,11 +26,10 @@ struct StreakView: View {
                     .font(.largeTitle)
                     .padding(.leading)
                 VStack {
-                    Text("\(streak) Weeks")
+                    Text("\(streaks.first?.streak ?? 0) Weeks")
                     Text("Current Streak")
                         .font(.caption)
                         .foregroundStyle(.gray)
-                
                 }
                 Spacer()
                 
@@ -37,14 +38,12 @@ struct StreakView: View {
                     .foregroundStyle(.orange)
                     .font(.largeTitle)
                 VStack {
-                    Text("\(highestStreak) Weeks")
+                    Text("\(streaks.first?.highestStreak ?? 0) Weeks")
                     Text("Highest Streak")
                         .font(.caption)
                         .foregroundStyle(.gray)
-                
                 }
                 .padding(.trailing)
-
             }
         }
         .padding()
@@ -54,35 +53,39 @@ struct StreakView: View {
         }
     }
     
-    // Update streak function (YM)
+    // Update streak function
     func updateStreak() {
-        nextMonday()
-        if Date() >= streakRefreshDay {
-            if actionThisWeek {
-                streak += 1
-                actionThisWeek = false
-            }
-            else {
-                streak = 0
-                actionThisWeek = false
-            }
-        }
+        guard let currentStreak = streaks.first else { return }
         
-        if streak > highestStreak {
-            highestStreak = streak
-        }
-        
-    }
-    
-    // finds the following monday
-    func nextMonday(from date: Date = Date()) {
-        var calendar = Calendar.current
-        // weekday: 2 means monday as week starts from sunday
-        streakRefreshDay = calendar.nextDate(after: date, matching: DateComponents(weekday: 2), matchingPolicy: .nextTime)!
+        // finds the following monday
+        let calendar = Calendar.current
+        let nextRefresh = calendar.nextDate(
+            after: currentStreak.streakRefreshDay,
+            matching: DateComponents(weekday: 2),
+            matchingPolicy: .nextTime
+        ) ?? Date()
 
+        if Date() >= currentStreak.streakRefreshDay {
+            if currentStreak.actionThisWeek {
+                currentStreak.streak += 1
+                currentStreak.actionThisWeek = false
+            } else {
+                currentStreak.streak = 0
+                currentStreak.actionThisWeek = false
+            }
+
+            // update the next refresh day
+            currentStreak.streakRefreshDay = nextRefresh
+        }
+
+        // Update highest streak
+        if currentStreak.streak > currentStreak.highestStreak {
+            currentStreak.highestStreak = currentStreak.streak
+        }
+
+        try? context.save()
     }
 }
-
 
 #Preview {
     StreakView()

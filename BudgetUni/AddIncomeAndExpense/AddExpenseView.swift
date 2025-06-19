@@ -15,6 +15,9 @@ struct AddExpenseView: View {
     // Provides access to database
     @Environment(\.modelContext) private var context
     
+    // Provides access to streak database
+    
+    @Query private var streaks: [Streak]
 
     @Binding var isPresented: Bool
     @State private var name: String = ""
@@ -25,6 +28,7 @@ struct AddExpenseView: View {
     @State private var selectedFrequency: String = "Daily"
     @State private var isValid: Bool = true
     
+    // Checks to see whether app had been interacted with or not
     @State private var actionThisWeek: Bool = false
     
     var body: some View {
@@ -65,7 +69,16 @@ struct AddExpenseView: View {
             
             // Save button
             SaveButtonView() {
-                actionThisWeek = true
+                
+                var currentStreak: Streak
+                if let existingStreak = streaks.first {
+                    currentStreak = existingStreak
+                } else {
+                    currentStreak = Streak(actionThisWeek: true, streak: 0, highestStreak: 0, streakRefreshDay: Date())
+                        context.insert(currentStreak)
+                }
+                currentStreak.actionThisWeek = true
+                
                 isPresented.toggle()
                 
                 let newExpense = Expenses(

@@ -4,6 +4,7 @@
 //
 //  Created by Jiamin Gu on 2025-05-15.
 //
+// this view shows the header of the side menu
 
 import SwiftUI
 
@@ -17,11 +18,8 @@ struct SideMenuHeaderView: View {
                 .background(.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.vertical)
-            VStack(alignment: .leading, spacing:6){
-                Text("BudgetUni")
-                    .font(.headline)
-                
-            }
+            Text("BudgetUni")
+                .font(.headline)
         }
     }
 }

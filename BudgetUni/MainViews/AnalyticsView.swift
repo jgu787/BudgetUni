@@ -18,6 +18,7 @@ struct AnalyticsView: View {
             IncomeVsExpenseGraphView()
             SpendingHabitsGraphView()
             SpendingBreakdownChart()
+            ClearAnalyticsView()
         }
     }
 }

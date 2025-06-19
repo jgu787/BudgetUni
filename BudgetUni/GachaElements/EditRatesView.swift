@@ -67,7 +67,7 @@ struct EditRatesView: View {
                     .foregroundStyle(.red)
             }
 
-            
+            // Save button
             SaveButtonView() {
                 do {
                     gacha.nameOfPrize = tempName
@@ -96,10 +96,10 @@ struct EditRatesView: View {
     }
 }
 
+// Preview appears on right (not part of app)
 #Preview {
     EditRatesView(
         showEditRates: .constant(true),
         gacha: Gacha(frequency: 7, pity: 0, nameOfPrize: "Bubble Tea", date: .now, lastPullDate: nil)
     )
 }
-

@@ -11,6 +11,7 @@ import SwiftUI
 import MapKit
 
 struct FoodsView: View {
+    // location manager
     let manager = CLLocationManager()
     @State private var cameraPosition: MapCameraPosition =
         .userLocation(fallback: .automatic)

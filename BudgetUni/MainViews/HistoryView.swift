@@ -127,6 +127,7 @@ struct HistoryView: View {
                     break
                 }
                 
+                // Saves the change and deletes
                 try context.save()
             }
         } catch {

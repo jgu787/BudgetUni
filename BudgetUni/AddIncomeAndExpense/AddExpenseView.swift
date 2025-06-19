@@ -12,7 +12,7 @@ import SwiftData
 
 struct AddExpenseView: View {
     
-    // Provides access to database
+    // Provides access to database (has to be used in view)
     @Environment(\.modelContext) private var context
     
     // Provides access to streak database
@@ -92,6 +92,8 @@ struct AddExpenseView: View {
                 // Updates or fetches breakdown entry from
                 // each individual category to see whether
                 // it is there or not before adding to a new context and saving to memory
+
+            
                 var breakdown: Breakdown
                 if let existing = try? context.fetch(FetchDescriptor<Breakdown>()).first {
                     breakdown = existing
@@ -137,6 +139,7 @@ struct AddExpenseView: View {
     
 }
 
+// Preview displays on right (not part of app)
 #Preview {
     AddExpenseView(isPresented: .constant(true))
 }

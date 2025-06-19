@@ -12,6 +12,7 @@ import SwiftUI
 struct AnalyticsView: View {
     
     var body: some View {
+        // scrollable through different graphs
         ScrollView {
             IncomeVsExpenseGraphView()
             SpendingHabitsGraphView()

@@ -20,9 +20,6 @@ struct IncomeVsExpenseGraphView: View {
     @Query private var expenseItems: [Expenses]
     @Query private var streaks: [Streak]
     
-    //var expenses: Double = 345.95
-    //var income: Double = 376.58
-    
     var totalIncome: Double {
         incomeItems.reduce(0) { $0 + $1.income }
     }
@@ -53,9 +50,11 @@ struct IncomeVsExpenseGraphView: View {
             
             // displays income vs expense graph
             Chart{
+                // shows income as green on left
                 BarMark(x: .value("Income", totalIncome))
                 .foregroundStyle(.green)
                 
+                // shows expense as red on right
                 BarMark(x: .value("Expense", totalExpenses))
                 .foregroundStyle(.red)
             }
@@ -68,16 +67,22 @@ struct IncomeVsExpenseGraphView: View {
         }
         .padding()
         .onAppear() {
-            guard let currentStreak = streaks.first else { return }
-            if balance >= 0 {
-                currentStreak.onBudget = true
-            }
-            else {
-                currentStreak.onBudget = false
-            }
+            checkIfOnBudget()
         }
         
      }
+    
+    // function that checks if user is on
+    // budget to claim their streak
+    func checkIfOnBudget() {
+        guard let currentStreak = streaks.first else { return }
+        if balance >= 0 {
+            currentStreak.onBudget = true
+        }
+        else {
+            currentStreak.onBudget = false
+        }
+    }
 }
 
 #Preview {

@@ -12,31 +12,25 @@
 import Foundation
 import SwiftData
 
-// Tax rates (constants)
-
-let bcTax = 0.07
-let ontarioTax = 0.12
-
 // Use @Model to get swift to store it into database
 @Model
 public class BudgetingTools: Identifiable {
-    
+
     // Variables
 
     var userid: String
     var name: String
     var expenseAmount: Double
     var isBudget: Bool
-    
+
     // Sends things to itself for storage
     // User should be string, name is string, budget is a double (parameters)
     init(user: String, name: String, expenseAmount: Double, isBudget: Bool = false) {
-        
+
         self.userid = user
         self.name = name
         self.expenseAmount = expenseAmount
         self.isBudget = isBudget
     }
-    
-}
 
+}

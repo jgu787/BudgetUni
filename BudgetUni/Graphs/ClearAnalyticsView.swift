@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 
+// This is a test button to clear the database
 struct ClearAnalyticsView: View {
     @Environment(\.modelContext) private var context
     @Query private var expenses: [Expenses]  // Replace `Expense` with your model name

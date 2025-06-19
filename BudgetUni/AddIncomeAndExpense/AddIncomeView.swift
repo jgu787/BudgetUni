@@ -23,6 +23,8 @@ struct AddIncomeView: View {
     @State private var selectedFrequency: String = "Daily"
     @State private var isValid: Bool = true
     
+    @State private var actionThisWeek: Bool = false
+    
     var body: some View {
         VStack {
             
@@ -59,6 +61,7 @@ struct AddIncomeView: View {
             
             // Save button
             SaveButtonView() {
+                actionThisWeek = true
                 isPresented.toggle()
                 
                 let newIncome = Income(

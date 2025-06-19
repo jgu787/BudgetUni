@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct StreakView: View {
-    var streak: Int = 2
-    var highestStreak: Int = 15
+    @State private var streak: Int = 0
+    @State private var highestStreak: Int = 0
+    
+    @State private var actionThisWeek: Bool = false
+    @State private var streakRefreshDay: Date = Date()
     
     var body: some View {
         //streak view
@@ -46,20 +49,38 @@ struct StreakView: View {
         }
         .padding()
         .bold()
+        .onAppear() {
+            updateStreak()
+        }
     }
-}
+    
+    // Update streak function (YM)
+    func updateStreak() {
+        nextMonday()
+        if Date() >= streakRefreshDay {
+            if actionThisWeek {
+                streak += 1
+                actionThisWeek = false
+            }
+            else {
+                streak = 0
+                actionThisWeek = false
+            }
+        }
+        
+        if streak > highestStreak {
+            highestStreak = streak
+        }
+        
+    }
+    
+    // finds the following monday
+    func nextMonday(from date: Date = Date()) {
+        var calendar = Calendar.current
+        // weekday: 2 means monday as week starts from sunday
+        streakRefreshDay = calendar.nextDate(after: date, matching: DateComponents(weekday: 2), matchingPolicy: .nextTime)!
 
-// Update streak function (YM)
-
-func updateStreak() {
-    
-
-    // Streak update
-    
-    //if (userinteraction == true and )
-    
-    // Beats highest streak
-    
+    }
 }
 
 

@@ -20,6 +20,7 @@ struct EditRatesView: View {
     // end
     
     @State var tempFreq: String = ""
+    @State var tempName: String = ""
     @State var isValid: Bool = true
     
     var body: some View {
@@ -46,7 +47,7 @@ struct EditRatesView: View {
             HStack {
                 Text("Pull objective: ")
                     .bold()
-                TextField("Bubble Tea", text: $gacha.nameOfPrize)
+                TextField("Bubble Tea", text: $tempName)
             }
             .padding(.top)
             
@@ -72,6 +73,7 @@ struct EditRatesView: View {
             
             SaveButtonView() {
                 do {
+                    gacha.nameOfPrize = tempName
                     try modelContext.save()
                     showEditRates.toggle()
                 } catch {

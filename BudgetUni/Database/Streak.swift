@@ -17,13 +17,15 @@ public class Streak: Identifiable {
     var streak: Int
     var highestStreak: Int
     var streakRefreshDay: Date
+    var onBudget: Bool
     
-    init(actionThisWeek: Bool, streak: Int, highestStreak: Int, streakRefreshDay: Date) {
+    init(actionThisWeek: Bool, streak: Int, highestStreak: Int, streakRefreshDay: Date,onBudget: Bool) {
         
         self.actionThisWeek = actionThisWeek
         self.streak = streak
         self.highestStreak = highestStreak
         self.streakRefreshDay = streakRefreshDay
+        self.onBudget = onBudget
         
     }
         

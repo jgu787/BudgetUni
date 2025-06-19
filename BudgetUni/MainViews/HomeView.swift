@@ -42,7 +42,8 @@ struct HomeView: View {
                             actionThisWeek: false,
                             streak: 0,
                             highestStreak: 0,
-                            streakRefreshDay: Date()
+                            streakRefreshDay: Date(),
+                            onBudget: false
                         )
                         context.insert(newStreak)
                         try? context.save()

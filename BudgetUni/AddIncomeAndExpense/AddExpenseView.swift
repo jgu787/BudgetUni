@@ -74,7 +74,7 @@ struct AddExpenseView: View {
                 if let existingStreak = streaks.first {
                     currentStreak = existingStreak
                 } else {
-                    currentStreak = Streak(actionThisWeek: true, streak: 0, highestStreak: 0, streakRefreshDay: Date())
+                    currentStreak = Streak(actionThisWeek: false, streak: 0, highestStreak: 0, streakRefreshDay: findNextMonday(), onBudget: false)
                         context.insert(currentStreak)
                 }
                 currentStreak.actionThisWeek = true
@@ -140,6 +140,17 @@ struct AddExpenseView: View {
         .padding()
                 
      }
+    
+    func findNextMonday() -> Date {
+        // finds the following monday
+        let calendar = Calendar.current
+        let nextRefresh = calendar.nextDate(
+            after: Date(),
+            matching: DateComponents(weekday: 2),
+            matchingPolicy: .nextTime
+        ) ?? Date()
+        return nextRefresh
+    }
 }
 
 #Preview {

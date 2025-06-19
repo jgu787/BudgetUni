@@ -28,9 +28,6 @@ public class BudgetingTools: Identifiable {
     var expenseAmount: Double
     var isBudget: Bool
     
-    //var streak: Int
-    //var highestStreak: Int
-    
     // Sends things to itself for storage
     // User should be string, name is string, budget is a double (parameters)
     init(user: String, name: String, expenseAmount: Double, isBudget: Bool = false) {
@@ -39,8 +36,6 @@ public class BudgetingTools: Identifiable {
         self.name = name
         self.expenseAmount = expenseAmount
         self.isBudget = isBudget
-        //self.streak = streak
-        //self.highestStreak = highestStreak
     }
     
 }

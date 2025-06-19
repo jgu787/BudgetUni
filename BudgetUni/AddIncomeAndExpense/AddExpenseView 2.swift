@@ -10,7 +10,7 @@
 import SwiftUI
 import SwiftData
 
-struct AddExpenseView: View {
+struct AddExpenseView2: View {
     
     // Provides access to database
     @Environment(\.modelContext) private var context

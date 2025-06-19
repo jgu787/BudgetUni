@@ -5,14 +5,18 @@
 //  Created by Jiamin Gu on 2025-06-15.
 //
 
+// Imports
+
 import SwiftUI
 
 struct EditRatesView: View {
+    
+    @Environment(\.modelContext) private var modelContext
+    
     @Binding var showEditRates: Bool
     
     // need to map to database
-    @State var nameOfPrize: String = ""
-    @State var frequency: Double = 7
+    @Bindable var gacha: Gacha
     // end
     
     @State var tempFreq: String = ""
@@ -42,7 +46,7 @@ struct EditRatesView: View {
             HStack {
                 Text("Pull objective: ")
                     .bold()
-                TextField("Bubble Tea" , text: $nameOfPrize)
+                TextField("Bubble Tea", text: $gacha.nameOfPrize)
             }
             .padding(.top)
             
@@ -67,7 +71,12 @@ struct EditRatesView: View {
 
             
             SaveButtonView() {
-                showEditRates.toggle()
+                do {
+                    try modelContext.save()
+                    showEditRates.toggle()
+                } catch {
+                    print("Failed to save gacha settings: \(error.localizedDescription)")
+                }
             }
             .disabled(!isValid)
         }
@@ -78,8 +87,8 @@ struct EditRatesView: View {
     
     // tests if the value is a float value
     func testIsNum(_ input: String) {
-        if let value = Double(input) as Double? {
-            frequency = value
+        if let value = Int(input) {
+            gacha.frequency = value
             isValid = true
         }
         else {
@@ -89,5 +98,9 @@ struct EditRatesView: View {
 }
 
 #Preview {
-    EditRatesView(showEditRates: .constant(true))
+    EditRatesView(
+        showEditRates: .constant(true),
+        gacha: Gacha(frequency: 7, pity: 0, nameOfPrize: "Bubble Tea", date: .now, lastPullDate: nil)
+    )
 }
+

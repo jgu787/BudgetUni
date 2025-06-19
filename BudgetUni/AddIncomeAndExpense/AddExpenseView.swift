@@ -71,10 +71,10 @@ struct AddExpenseView: View {
                        date: date,
                        isRecurring: isRecurring,
                        selectedFrequency: selectedFrequency,
-                       category: "General"
+                       // Appends it to specific category
+                       category: category.capitalized
                    )
                 
-            
                 // Saves it to database
                 
                 context.insert(newExpense)

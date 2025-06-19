@@ -18,11 +18,10 @@ struct SpendingBreakdownChart: View {
 
     // Fetches the data from breakdown category
     @Query private var breakdownItems: [Breakdown]
-    @State private var breakdown: Breakdown? = nil
     
-    // Use the observed @State breakdown now
+    // Computes the breakdown from the first (and only) Breakdown object
     var breakdowns: [(String, Double)] {
-        guard let breakdown = breakdown else { return [] }
+        guard let breakdown = breakdownItems.first else { return [] }
         
         return [
             ("Food", breakdown.food),
@@ -31,7 +30,7 @@ struct SpendingBreakdownChart: View {
             ("Education", breakdown.education),
             ("Misc", breakdown.miscellaneous)
         ]
-        .filter { $0.1 > 0 }
+        .filter { $0.1 > 0 } // Only show categories with > 0 spending
     }
     
     var body: some View {
@@ -60,12 +59,10 @@ struct SpendingBreakdownChart: View {
             .scaledToFit()
         }
         .padding()
-        .onAppear {
-            breakdown = breakdownItems.first
-        }
     }
 }
 
+// Displays preview on right (not part of app)
 #Preview {
     SpendingBreakdownChart()
 }
